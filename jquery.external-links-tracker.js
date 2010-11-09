@@ -34,15 +34,26 @@
       // domain names
       host = host[host.length - 2] + '.' + host[host.length - 1] 
     }
+    //check for internal links that need to open in a new window
+    $("a[href*='"+host+"'],a[href^='/'],a[href^='./'],a[href^='../']").live('click', function(e){
+      if($(this).hasClass("newwindow")) {
+        e.preventDefault();
+        if(window.console){ window.console.log('Internal link not tracked as outging: '+ $(this).attr('href')) };
+        window.open($(this).attr('href'));
+      }
+    });
     // track external links
     $("a[href^='http']:not([href*='" + host + "'])").live('click', function(e){
       e.preventDefault();
       var linkLocation = this.href.replace(/^(http|https):\/\//, '').replace(/www\./i, '').replace(/\./gi, '_');
-      var track = '/outgoing/'+ linkLocation
+      var track = '/outgoing/'+ linkLocation      
       if(typeof(pageTracker) != 'undefined'){
         pageTracker._trackPageview(track);
-      }
-      else {
+        if(window.console){ window.console.log('Tracked external link: '+ track) };
+      } else if(typeof(_gat) == 'object') {
+        _gaq.push(['_trackPageview', track]);
+        if(window.console){ window.console.log('Tracked external link: '+ track) };
+      } else {
         if(window.console){ window.console.log('Could not track external link: '+ track) }
       }
       window.open($(this).attr('href'));
