@@ -3,6 +3,10 @@ jQuery External Links Tracker
 
 Plugin for tracking external links in Google Analytics
 
+Handles event tracking all external link clicks to Google. This library
+makes all external links and local links with a class of "newwindow" 
+open in a new window.
+
 Site:
 http://github.com/pnmg/jquery-external-links-tracker
 
@@ -13,7 +17,7 @@ http://pnmg.com
 License
 =============================
 
-Copyright (C) 2010  Paradigm New Media Group
+Copyright (C) 2011  Paradigm New Media Group
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
